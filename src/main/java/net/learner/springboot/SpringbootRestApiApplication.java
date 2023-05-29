@@ -1,5 +1,6 @@
 package net.learner.springboot;
 
+import ch.qos.logback.core.net.SyslogOutputStream;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -8,6 +9,7 @@ public class SpringbootRestApiApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(SpringbootRestApiApplication.class, args);
+		System.out.println("May the force be with you...");
 	}
 
 }
