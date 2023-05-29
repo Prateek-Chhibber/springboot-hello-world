@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@RequestMapping("students")
 public class StudentController {
 
     @GetMapping("/student")
@@ -19,7 +20,7 @@ public class StudentController {
         return ResponseEntity.ok().header("custom-header","prateek").body(student);
     }
 
-    @GetMapping("students")
+    @GetMapping
     public ResponseEntity<List<Student>> getStudents(){
         List<Student> students = new ArrayList<>();
         students.add(new Student(1,"Maggie","Kothari"));
@@ -30,17 +31,17 @@ public class StudentController {
 
 //    Spring boot REST Api with Path Variable
 //    {id} - URI template variable
-    @GetMapping("students/{id}/{first-Name}/{last-name}")
+    @GetMapping("{id}/{first-Name}/{last-name}")
     public ResponseEntity<Student> studentPathVariable(@PathVariable("id") int id,
                                        @PathVariable("first-Name") String firstName,
                                        @PathVariable("last-name") String lastName){
-        Student student = new Student(id,"firstName","lastName");
+        Student student = new Student(id,firstName,lastName);
         return ResponseEntity.ok(student);
     }
 
 //    Spring boot REST API with request param
 //    http://localhost:8080/students/query?id=1&firstName=Prateek&lastName=Megha
-    @GetMapping("students/query")
+    @GetMapping("query")
     public ResponseEntity<Student> studentRequestVariable(@RequestParam int id, @RequestParam String firstName, @RequestParam String lastName){
         Student student = new Student(id, firstName,lastName);
         return ResponseEntity.ok(student);
@@ -48,7 +49,7 @@ public class StudentController {
 
 //    Spring boot REST Api that handles post request - create new resource
 //    @PostMapping and @RequestBody
-    @PostMapping("students/create")
+    @PostMapping("create")
 //    @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Student> createStudent(@RequestBody Student student){
         System.out.println(student.getId());
@@ -58,7 +59,7 @@ public class StudentController {
     }
 
 //    Spring boot REST Api that handles HTTP PUT request - updating existing resource
-    @PutMapping("students/{id}/update")
+    @PutMapping("{id}/update")
 //    @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Student> updateStudent(@RequestBody Student student, @PathVariable("id") int studentId){
         System.out.println(student.getFirstName());
@@ -67,7 +68,7 @@ public class StudentController {
     }
 
 //    Spring Boot REST Api that handles HTTP Delete request - deleting existing resource
-    @DeleteMapping("students/{id}/delete")
+    @DeleteMapping("{id}/delete")
     public ResponseEntity<String> deleteStudent(@PathVariable("id") int studentId){
         System.out.println("id = "+studentId);
         return ResponseEntity.ok("Successfully deleted student");
